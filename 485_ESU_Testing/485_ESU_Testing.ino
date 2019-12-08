@@ -1,3 +1,18 @@
+//void parse_values(uint32_t bytes[4]){
+//  uint32_t data[4];
+//  float val;
+//  data[0] = bytes[3] << 24;
+//  data[1] = bytes[2] << 16;
+//  data[2] = bytes[1] << 8;
+//  data[3] = bytes[0];
+//  val = data[0]|data[1]|data[2]|data[3];
+//  Serial.print(val);
+//}
+
+#include "bmp3.c"
+#include "bmp3.h"
+#include "bmp3_defs.h"
+
 void setup() {
   // put your setup code here, to run once:s
   Serial.begin(9600);
@@ -9,6 +24,7 @@ char command = 0;
 char value = 0;
 uint8_t temp_bytes[2];
 uint8_t humid_bytes[2];
+uint8_t temp_bmp_bytes[3];
 uint8_t pressure_bytes[3];
 uint16_t temp_raw;
 uint16_t humid_raw;
@@ -26,52 +42,74 @@ void loop() {
   if(Serial2.available()){
     value = Serial2.read();
     Serial.println(value);
-//    switch(count){
-//      case 0:
-//      temp_bytes[0] = value;
-//      Serial.print("Low Temp Val Is: ");
-//      Serial.println(temp_bytes[0]);
-//      count += 1;
-//      break;
-//      case 1:
-//      temp_bytes[1] = value;
-//      Serial.print("High Temp Val Is: ");
-//      Serial.println(temp_bytes[1]);
-//      count += 1;
-//      break;
-//      case 2:
-//      humid_bytes[0] = value;
-//      Serial.print("Low Humid Val Is: ");
-//      Serial.println(humid_bytes[0]);
-//      count += 1;
-//      break;
-//      case 3:
-//      humid_bytes[1] = value;
-//      Serial.print("High Humid Val Is: ");
-//      Serial.println(humid_bytes[1]);
-//      count += 1;
-//      break;
-//      case 4:
-//      pressure_bytes[0] = value;
-//      Serial.print("Pressure XLSB Val Is: ");
-//      Serial.println(pressure_bytes[0]);
-//      count += 1;
-//      break;
-//      case 5:
-//      pressure_bytes[1] = value;
-//      Serial.print("Pressure LSB Val Is: ");
-//      Serial.println(pressure_bytes[1]);
-//      count += 1;
-//      break;
-//      case 6:
-//      pressure_bytes[2] = value;
-//      Serial.print("Pressure MSB Val Is: ");
-//      Serial.println(pressure_bytes[2]);
-//      count = 0;
-//      break;
-//      default:
-//      Serial.print("Error Receiving data!");
-//      count = 0;
+    switch(count){
+      case 0:
+      temp_bytes[0] = value;
+      Serial.print("Low Temp Val Is: ");
+      Serial.println(temp_bytes[0]);
+      count += 1;
+      //bytes[0] = value;
+      break;
+      case 1:
+      temp_bytes[1] = value;
+      Serial.print("High Temp Val Is: ");
+      Serial.println(temp_bytes[1]);
+      count += 1;
+      //bytes[1] = value;
+      break;
+      case 2:
+      humid_bytes[0] = value;
+      Serial.print("Low Humid Val Is: ");
+      Serial.println(humid_bytes[0]);
+      count += 1;
+      //bytes[2] = value;
+      break;
+      case 3:
+      humid_bytes[1] = value;
+      Serial.print("High Humid Val Is: ");
+      Serial.println(humid_bytes[1]);
+      count += 1;
+//      bytes[3] = value;
+      break;
+      case 4:
+      pressure_bytes[0] = value;
+      Serial.print("Pressure XLSB Val Is: ");
+      Serial.println(pressure_bytes[0]);
+      count += 1;
+      break;
+      case 5:
+      pressure_bytes[1] = value;
+      Serial.print("Pressure LSB Val Is: ");
+      Serial.println(pressure_bytes[1]);
+      count += 1;
+      break;
+      case 6:
+      pressure_bytes[2] = value;
+      Serial.print("Pressure MSB Val Is: ");
+      Serial.println(pressure_bytes[2]);
+      count += 1;
+      break;
+      case 7:
+      temp_bmp_bytes[0] = value;
+      Serial.print("Temp XSB Val Is: ");
+      Serial.println(temp_bmp_bytes[0]);
+      count += 1;
+      break;
+      case 8:
+      temp_bmp_bytes[1] = value;
+      Serial.print("Temp LSB Val Is: ");
+      Serial.println(temp_bmp_bytes[1]);
+      count += 1;
+      break;
+      case 9:
+      temp_bmp_bytes[2] = value;
+      Serial.print("Temp MSB Val Is: ");
+      Serial.println(temp_bmp_bytes[2]);
+      count = 0;
+      break;
+      default:
+      Serial.print("Error Receiving data!");
+      count = 0;
 //      Serial.println("Proccessing Data...");
 //      temp_raw = temp_bytes[1] << 8 | temp_bytes[0];
 //      Serial.println(temp_raw);
@@ -80,8 +118,10 @@ void loop() {
 ////      Serial.print("Temperature in C: ");
 ////      Serial.println(temp);
 //      count += 1;
-//      break;
+      break;
 
-    //}
+    }
+    //parse_values(bytes);
   }
+  
 }
