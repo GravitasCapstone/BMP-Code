@@ -1,18 +1,3 @@
-//void parse_values(uint32_t bytes[4]){
-//  uint32_t data[4];
-//  float val;
-//  data[0] = bytes[3] << 24;
-//  data[1] = bytes[2] << 16;
-//  data[2] = bytes[1] << 8;
-//  data[3] = bytes[0];
-//  val = data[0]|data[1]|data[2]|data[3];
-//  Serial.print(val);
-//}
-
-#include "bmp3.c"
-#include "bmp3.h"
-#include "bmp3_defs.h"
-
 void setup() {
   // put your setup code here, to run once:s
   Serial.begin(9600);
@@ -37,7 +22,6 @@ void loop() {
     command = Serial.read();
     Serial.println(command);
     Serial2.write(command);
-    delay(1000);
   }
   if(Serial2.available()){
     value = Serial2.read();
